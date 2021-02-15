@@ -1,0 +1,31 @@
+import requests
+
+amount=float(input("Podaj kwotę: "))
+currency_1=str(input("Podaj w jakiej walucie masz podaną kwotę: GPB,EUR,PLN czy USD: "))
+currency_2=str(input("Podaj na jaką walutę przeliczyć podaną kwotę:GPB,EUR,PLN czy USD?: "))
+
+
+
+def choice_amount(choice):
+    if choice=="GPB":
+        url_gbp = f"http://api.nbp.pl/api/exchangerates/rates/a/gbp/last/10/?format=json"
+        rgbp = requests.get(url_gbp)
+        gpb1=float((rgbp.json()["rates"][-1]["mid"]))
+        return gpb1 
+    elif choice=="USD":
+        url_usd = f"http://api.nbp.pl/api/exchangerates/rates/a/usd/last/10/?format=json"
+        rus = requests.get(url_usd)
+        us1=float((rus.json()["rates"][-1]["mid"]))
+        return us1
+    elif choice=="EUR":
+        url_eur = f"http://api.nbp.pl/api/exchangerates/rates/a/eur/last/10/?format=json"
+        eur = requests.get(url_eur)
+        eur1=float((reur.json()["rates"][-1]["mid"]))
+        return eur1
+    elif choice=="PLN":
+        return(1)
+print(choice_amount(currency_1))
+print(choice_amount(currency_2))
+
+amount_final=(choice_amount(currency_1)*amount)/choice_amount(currency_2)
+print("Kwota wyniesie: ", amount_final)
